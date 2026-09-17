@@ -1,0 +1,22 @@
+# C++
+*.o
+*.obj
+*.exe
+*.out
+*.app
+app
+a.out
+
+# Java
+*.class
+*.jar
+*.war
+out/
+build/
+target/
+
+# IDE и система
+.idea/
+*.iml
+.vscode/
+.DS_Store

@@ -6,6 +6,7 @@
 *.app
 app
 a.out
+cpp/app
 
 # Java
 *.class
@@ -14,6 +15,7 @@ a.out
 out/
 build/
 target/
+java/out/
 
 # IDE и система
 .idea/
@@ -21,5 +23,5 @@ target/
 .vscode/
 .DS_Store
 
-cpp/app
+# Local run artifacts
 output.txt

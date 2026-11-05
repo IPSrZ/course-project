@@ -17,8 +17,7 @@ Hardware::~Hardware() {
 }
 
 void Hardware::inspect() const {
-    std::cout << "  Hardware " << m_model
-              << (m_isBroken ? " BROKEN" : " OK");
+    std::cout << "  Hardware " << m_model << (m_isBroken ? " BROKEN" : " OK");
     if (!m_lastReason.empty()) {
         std::cout << " (" << m_lastReason << ")";
     }

@@ -4,14 +4,15 @@
 
 namespace cyberclub {
 
-Session::Session() : m_id(0), m_clientName("guest"), m_computer(nullptr), m_isActive(false), m_minutes(0) {
+Session::Session()
+    : m_id(0), m_clientName("guest"), m_computer(), m_isActive(false), m_minutes(0) {
     std::cout << "[ctor] Session created: id=" << m_id << "\n";
 }
 
-Session::Session(int id, std::string clientName, Computer* computer)
+Session::Session(int id, std::string clientName, std::weak_ptr<Computer> computer)
     : m_id(id),
       m_clientName(std::move(clientName)),
-      m_computer(computer),
+      m_computer(std::move(computer)),
       m_isActive(false),
       m_minutes(0) {
     std::cout << "[ctor] Session created: id=" << m_id << " client=" << m_clientName << "\n";
@@ -19,15 +20,16 @@ Session::Session(int id, std::string clientName, Computer* computer)
 
 Session::~Session() {
     std::cout << "[dtor] Session destroyed: id=" << m_id
-              << " (computer is NOT deleted)\n";
+              << " (computer is NOT owned / NOT deleted)\n";
 }
 
 bool Session::start() {
-    if (m_computer == nullptr) {
-        std::cout << "  [rule] no computer attached\n";
+    std::shared_ptr<Computer> computer = m_computer.lock();
+    if (!computer) {
+        std::cout << "  [rule] no computer attached (or already destroyed)\n";
         return false;
     }
-    if (m_computer->isBroken()) {
+    if (computer->isBroken()) {
         std::cout << "  [rule] computer broken, refuse start\n";
         return false;
     }
@@ -35,8 +37,8 @@ bool Session::start() {
         std::cout << "  [rule] session already active\n";
         return false;
     }
-    if (!m_computer->isOn()) {
-        if (!m_computer->powerOn()) {
+    if (!computer->isOn()) {
+        if (!computer->powerOn()) {
             return false;
         }
     }
@@ -72,12 +74,11 @@ bool Session::end() {
 
 void Session::printStatus() const {
     std::cout << "Session #" << m_id << " client=" << m_clientName
-              << (m_isActive ? " ACTIVE" : " idle")
-              << " minutes=" << m_minutes << "\n";
-    if (m_computer != nullptr) {
-        std::cout << "  uses computer: " << m_computer->name() << "\n";
+              << (m_isActive ? " ACTIVE" : " idle") << " minutes=" << m_minutes << "\n";
+    if (std::shared_ptr<Computer> computer = m_computer.lock()) {
+        std::cout << "  uses computer: " << computer->name() << "\n";
     } else {
-        std::cout << "  no computer\n";
+        std::cout << "  no computer (expired or empty weak_ptr)\n";
     }
 }
 

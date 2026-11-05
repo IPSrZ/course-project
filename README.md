@@ -35,3 +35,7 @@ java Main
 Сборка:
 g++ cpp/src/main.cpp cpp/src/hardware.cpp cpp/src/computer.cpp cpp/src/session.cpp -I cpp/include -o app
 ./app
+
+## Lab 03
+- `lab-03-java`: Java port (managed memory, GC, try-with-resources) in `java/`
+- `lab-03-cpp`: C++ smart pointers in `cpp/`

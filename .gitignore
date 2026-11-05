@@ -20,3 +20,9 @@ target/
 *.iml
 .vscode/
 .DS_Store
+
+# Java build
+out/
+*.class
+java/out/
+output.txt

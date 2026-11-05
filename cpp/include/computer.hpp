@@ -21,15 +21,15 @@ public:
     bool finishRepair();
     void printStatus() const;
 
-    int id() const;
-    const std::string& name() const;
-    bool isOn() const;
-    bool isBroken() const;
+    [[nodiscard]] int id() const;
+    [[nodiscard]] const std::string& name() const;
+    [[nodiscard]] bool isOn() const;
+    [[nodiscard]] bool isBroken() const;
 
 private:
     int m_id;
     std::string m_name;
-    Hardware m_hardware;  // composition: part by value
+    Hardware m_hardware;  // composition: owned by value, not a pointer
     bool m_isOn;
 };
 

@@ -53,8 +53,7 @@ bool Computer::finishRepair() {
 }
 
 void Computer::printStatus() const {
-    std::cout << "Computer #" << m_id << " " << m_name
-              << (m_isOn ? " ON" : " OFF") << "\n";
+    std::cout << "Computer #" << m_id << " " << m_name << (m_isOn ? " ON" : " OFF") << "\n";
     m_hardware.inspect();
 }
 

@@ -7,7 +7,7 @@ namespace cyberclub {
 class Hardware {
 public:
     Hardware();
-    Hardware(std::string model);
+    explicit Hardware(std::string model);
     ~Hardware();
 
     Hardware(const Hardware&) = delete;
@@ -17,8 +17,8 @@ public:
     bool markBroken(const std::string& reason);
     bool markFixed();
 
-    bool isBroken() const;
-    const std::string& model() const;
+    [[nodiscard]] bool isBroken() const;
+    [[nodiscard]] const std::string& model() const;
 
 private:
     std::string m_model;
